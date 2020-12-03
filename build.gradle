@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.jhw.module.util'
+
+version = '0.1.0.SNAPSHOT.20201202'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {    
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.4.0'
+    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.5.0.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.1.1.RELEASE'
+    
+    compile group: 'org.springframework', name: 'spring-web', version: '5.2.9.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context', version: '5.2.9.RELEASE'
+    
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    
+    testImplementation 'junit:junit:4.13'
+
+    implementation project(':utils-core')
+    implementation project(':utils-spring')
+    implementation project(':clean-core-full')
+    
+    implementation project(':module-admin-seguridad-standard')
+    implementation project(':module-admin-seguridad-server')
+	
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
+    
+    //EclipseLink
+    compile group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.6'
+    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '2.7.6'
+    
+    //injection
+    compile group: 'com.google.inject', name: 'guice', version: '4.2.3'
+    compile group: 'javax.inject', name: 'javax.inject', version: '1'
+}
