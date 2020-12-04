@@ -5,9 +5,9 @@
  */
 package com.jhw.module.authorization_server.oauth2.user;
 
-import static com.jhw.module.authorization_server.oauth2.user.ApplicationUserRole.*;
-import java.util.Arrays;
-import java.util.List;
+import com.jhw.module.admin.seguridad.core.domain.UsuarioDomain;
+import com.jhw.module.admin.seguridad.core.module.SeguridadCoreModule;
+import com.jhw.module.admin.seguridad.core.usecase_def.UsuarioUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.User;
@@ -27,45 +27,27 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final List<UserDetails> users;
+    private final UsuarioUseCase usuarioUC = SeguridadCoreModule.getInstance().getImplementation(UsuarioUseCase.class);
 
     @Autowired
     public UserDetailServiceImpl(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
-        this.users = createUsers();
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return users.stream().filter((UserDetails t) -> {
-            return t.getUsername().equals(username);
-        }).findFirst().orElseThrow(()
-                -> new UsernameNotFoundException("El usuario no existe")
-        );
+        try {
+            return convert(usuarioUC.loadUserByUsername(username));
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("El usuario " + username + " no existe");
+        }
     }
 
-    private List<UserDetails> createUsers() {
-        return Arrays.asList(
-                User.builder()
-                        .username("chicho")
-                        .password(passwordEncoder.encode("123"))
-                        .authorities("read")
-                        .roles(STUDENT.name()) //ROLE_STUDENT
-                        .build(),
-                User
-                        .builder()
-                        .username("admin")
-                        .password(passwordEncoder.encode("admin"))
-                        .authorities("read")
-                        .roles(ADMIN.name()) //ROLE_ADMIN
-                        .build(),
-                User
-                        .builder()
-                        .username("tom")
-                        .password(passwordEncoder.encode("tom"))
-                        .authorities("read")
-                        .roles(ADMIN_TRAINEE.name()) //ROLE_ADMIN_TRAINEE
-                        .build());
+    protected UserDetails convert(UsuarioDomain ususario) {
+        return User.builder()
+                .username(ususario.getUsername())
+                .password(passwordEncoder.encode(ususario.getPassword()))
+                .roles(ususario.getRolFk().getNombreRol()) //ROLE_STUDENT
+                .build();
     }
-
 }
