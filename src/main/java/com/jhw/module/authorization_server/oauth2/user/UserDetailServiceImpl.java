@@ -5,10 +5,12 @@
  */
 package com.jhw.module.authorization_server.oauth2.user;
 
+import com.clean.core.domain.services.Resource;
 import com.jhw.module.admin.seguridad.core.domain.UsuarioDomain;
 import com.jhw.module.admin.seguridad.core.module.SeguridadCoreModule;
 import com.jhw.module.admin.seguridad.core.usecase_def.UsuarioUseCase;
 import com.jhw.module.authorization_server.oauth2.A_ModuleOAuth2;
+import com.jhw.module.authorization_server.oauth2.service.ResourceKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.User;
@@ -40,7 +42,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
         try {
             return convert(usuarioUC.loadUserByUsername(username));
         } catch (Exception e) {
-            throw new UsernameNotFoundException("El usuario " + username + " no existe");
+            throw new UsernameNotFoundException(
+                    Resource.getString(ResourceKeys.KEY_MSG_NO_USER_FOR_USERNAME)
+                    + ": " + username);
         }
     }
 
