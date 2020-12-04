@@ -7,8 +7,7 @@ package com.jhw.module.authorization_server.oauth2;
 
 import com.jhw.module.admin.seguridad.core.module.SeguridadCoreModule;
 import org.springframework.stereotype.Component;
-import com.jhw.module.admin.seguridad.core.usecase_def.RolUseCase;
-import com.jhw.module.admin.seguridad.core.usecase_def.UsuarioUseCase;
+import com.jhw.module.admin.seguridad.core.usecase_def.*;
 import com.jhw.module.admin.seguridad.repo.module.SeguridadRepoModule;
 import com.jhw.module.authorization_server.oauth2.service.ResourceOAuth2Implementation;
 
@@ -22,7 +21,7 @@ public class A_ModuleOAuth2 {
     public static final String BASE_PACKAGE = "com.jhw.module.authorization_server.oauth2";
 
     public final static UsuarioUseCase usuarioUC;
-    public final static RolUseCase rolUC;
+    public final static ClienteUseCase clienteUC;
 
     static {
         ResourceOAuth2Implementation.init();
@@ -30,6 +29,6 @@ public class A_ModuleOAuth2 {
         SeguridadCoreModule.init(SeguridadRepoModule.init());
 
         usuarioUC = SeguridadCoreModule.getInstance().getImplementation(UsuarioUseCase.class);
-        rolUC = SeguridadCoreModule.getInstance().getImplementation(RolUseCase.class);
+        clienteUC = SeguridadCoreModule.getInstance().getImplementation(ClienteUseCase.class);
     }
 }
