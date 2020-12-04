@@ -5,11 +5,20 @@
  */
 package com.jhw.module.authorization_server.oauth2.client;
 
+import com.clean.core.domain.services.Resource;
+import com.jhw.module.admin.seguridad.core.domain.UsuarioDomain;
+import com.jhw.module.admin.seguridad.core.usecase_def.ClienteUseCase;
+import com.jhw.module.authorization_server.oauth2.A_ModuleOAuth2;
+import com.jhw.module.authorization_server.oauth2.service.ResourceKeys;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.builders.ClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
@@ -25,36 +34,22 @@ public class ClientDetailServiceImpl implements ClientDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final List<ClientDetails> clients;
+    private final ClienteUseCase clienteUC = A_ModuleOAuth2.clienteUC;
 
     @Autowired
     public ClientDetailServiceImpl(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
-        this.clients = createClients();
     }
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        return clients.stream().filter((ClientDetails t) -> {
-            return t.getClientId().equals(clientId);
-        }).findFirst().orElseThrow(()
-                -> new ClientRegistrationException("El cliente " + clientId + " no existe.")
-        );
-    }
-
-    private List<ClientDetails> createClients() {
-        return Arrays.asList(
-                new ClientDetailsImpl("client1",
-                        passwordEncoder.encode("secret1"),
-                        "read",
-                        "password"
-                ),
-                new ClientDetailsImpl("client2",
-                        passwordEncoder.encode("secret2"),
-                        "read",
-                        "authorization_code"
-                )
-        );
+        try {
+            return ClientDetailsWrapper.from(passwordEncoder, clienteUC.loadClientByName(clientId));
+        } catch (Exception e) {
+            throw new UsernameNotFoundException(
+                    Resource.getString(ResourceKeys.KEY_MSG_NO_CLIENT_FOR_NAME)
+                    + ": " + clientId);
+        }
     }
 
 }

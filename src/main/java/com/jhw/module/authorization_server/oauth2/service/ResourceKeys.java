@@ -12,4 +12,6 @@ package com.jhw.module.authorization_server.oauth2.service;
 public class ResourceKeys {
 
     public static final String KEY_MSG_NO_USER_FOR_USERNAME = "msg.oauth2.error.user.no_user_for_username";
+    public static final String KEY_MSG_NO_CLIENT_FOR_NAME = "msg.oauth2.error.user.no_cliente_for_name";
+
 }
