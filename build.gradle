@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'com.jhw.module.util'
+group = 'com.jhw.module.authorization_server'
 
 version = '0.1.0.SNAPSHOT.20201202'
 
