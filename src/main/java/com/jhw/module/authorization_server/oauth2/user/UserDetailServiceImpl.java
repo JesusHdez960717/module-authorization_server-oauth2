@@ -8,6 +8,7 @@ package com.jhw.module.authorization_server.oauth2.user;
 import com.jhw.module.admin.seguridad.core.domain.UsuarioDomain;
 import com.jhw.module.admin.seguridad.core.module.SeguridadCoreModule;
 import com.jhw.module.admin.seguridad.core.usecase_def.UsuarioUseCase;
+import com.jhw.module.authorization_server.oauth2.A_ModuleOAuth2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.User;
@@ -27,7 +28,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final UsuarioUseCase usuarioUC = SeguridadCoreModule.getInstance().getImplementation(UsuarioUseCase.class);
+    private final UsuarioUseCase usuarioUC = A_ModuleOAuth2.usuarioUC;
 
     @Autowired
     public UserDetailServiceImpl(PasswordEncoder passwordEncoder) {
