@@ -23,6 +23,8 @@ import org.springframework.security.oauth2.provider.ClientDetails;
  */
 public class ClientDetailsWrapper implements ClientDetails {
 
+    public static final String SCOPES = "all";
+
     public final static ClientDetailsWrapper from(PasswordEncoder passwordEncoder, ClienteDomain client) {
         return new ClientDetailsWrapper(passwordEncoder, client);
     }
@@ -77,12 +79,12 @@ public class ClientDetailsWrapper implements ClientDetails {
 
     @Override
     public boolean isScoped() {
-        return false;
+        return true;
     }
 
     @Override
     public Set<String> getScope() {
-        return new HashSet<>();
+        return new HashSet<>(Arrays.asList(SCOPES));
     }
 
     @Override
