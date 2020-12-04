@@ -26,7 +26,7 @@ public class A_ModuleOAuth2 {
     static {
         ResourceOAuth2Implementation.init();
 
-        SeguridadCoreModule.init(SeguridadRepoModule.init());
+        SeguridadCoreModule.init();
 
         usuarioUC = SeguridadCoreModule.getInstance().getImplementation(UsuarioUseCase.class);
         clienteUC = SeguridadCoreModule.getInstance().getImplementation(ClienteUseCase.class);
