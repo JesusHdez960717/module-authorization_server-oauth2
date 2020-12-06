@@ -54,7 +54,8 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.tokenKeyAccess("permitAll()");//para que todo el mundo pueda acceder a la llave publica
+        security.tokenKeyAccess("permitAll()")//para que todo el mundo pueda acceder a la llave publica
+                .checkTokenAccess("isAuthenticated()");
         super.configure(security);
     }
 

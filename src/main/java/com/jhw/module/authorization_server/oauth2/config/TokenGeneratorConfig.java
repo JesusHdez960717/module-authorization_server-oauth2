@@ -26,7 +26,7 @@ public class TokenGeneratorConfig {
     @Primary
     public JwtAccessTokenConverter converter() {
         JwtAccessTokenConverter conv = new JwtAccessTokenConverter();
-        conv.setSigningKey("secret");
+        conv.setSigningKey("secretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecret");
         return conv;
     }
 
