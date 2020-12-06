@@ -8,7 +8,6 @@ package com.jhw.module.authorization_server.oauth2;
 import com.jhw.module.admin.seguridad.core.module.SeguridadCoreModule;
 import org.springframework.stereotype.Component;
 import com.jhw.module.admin.seguridad.core.usecase_def.*;
-import com.jhw.module.admin.seguridad.repo.module.SeguridadRepoModule;
 import com.jhw.module.authorization_server.oauth2.service.ResourceOAuth2Implementation;
 
 /**

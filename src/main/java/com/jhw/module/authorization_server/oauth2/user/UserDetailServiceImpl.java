@@ -7,7 +7,6 @@ package com.jhw.module.authorization_server.oauth2.user;
 
 import com.clean.core.domain.services.Resource;
 import com.jhw.module.admin.seguridad.core.domain.UsuarioDomain;
-import com.jhw.module.admin.seguridad.core.module.SeguridadCoreModule;
 import com.jhw.module.admin.seguridad.core.usecase_def.UsuarioUseCase;
 import com.jhw.module.authorization_server.oauth2.A_ModuleOAuth2;
 import com.jhw.module.authorization_server.oauth2.service.ResourceKeys;

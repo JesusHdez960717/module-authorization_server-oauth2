@@ -6,7 +6,6 @@
 package com.jhw.module.authorization_server.oauth2.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,11 +36,9 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     private ClientDetailsService clientDetailsService;
 
     @Autowired
-    @Qualifier("jwt-access-token-store-generator")
     private TokenStore tokenStore;
 
     @Autowired
-    @Qualifier("jwt-access-token-converter-generator")
     private JwtAccessTokenConverter tokenConverter;
 
     /**
@@ -54,6 +51,8 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.tokenKeyAccess("permitAll()")//para que todo el mundo pueda acceder a la llave publica
+                .checkTokenAccess("isAuthenticated()");
         super.configure(security);
     }
 
