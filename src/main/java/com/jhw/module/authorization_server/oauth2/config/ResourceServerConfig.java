@@ -7,6 +7,7 @@ package com.jhw.module.authorization_server.oauth2.config;
 
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,11 +17,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  */
 @Configuration
-public class UserManagerConfig extends WebSecurityConfigurerAdapter {
+public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.oauth2ResourceServer()
+                .jwt();//el decoder lo coge por el @bean
+
+        http
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated();
     }
 
     /**
@@ -33,6 +40,11 @@ public class UserManagerConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
