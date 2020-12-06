@@ -50,7 +50,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     protected UserDetails convert(UsuarioDomain ususario) {
         return User.builder()
                 .username(ususario.getUsername())
-                .password(passwordEncoder.encode(ususario.getPassword()))
+                .password(passwordEncoder.encode(ususario.getPublicPassword()))
                 .roles(ususario.getRolFk().getNombreRol()) //ROLE_STUDENT
                 .build();
     }

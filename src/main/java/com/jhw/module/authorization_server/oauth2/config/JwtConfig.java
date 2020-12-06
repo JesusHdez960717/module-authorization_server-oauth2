@@ -18,6 +18,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.stereotype.Component;
 
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+
 /**
  *
  * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
@@ -26,12 +29,13 @@ import org.springframework.stereotype.Component;
 public class JwtConfig {
 
     //TIENE QUE SER LARGA
-    private final String SECRET = SHA.hash512("secretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecret");
+    //private static final String SECRET = SHA.hash512("secretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecretsecret");
+    static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);//llave random, como tiene que ser
 
     @Bean
     public JwtAccessTokenConverter converter() {
         JwtAccessTokenConverter conv = new JwtAccessTokenConverter();
-        conv.setSigningKey(SECRET);
+        conv.setSigningKey(new String(SECRET_KEY.getEncoded()));
         return conv;
     }
 
