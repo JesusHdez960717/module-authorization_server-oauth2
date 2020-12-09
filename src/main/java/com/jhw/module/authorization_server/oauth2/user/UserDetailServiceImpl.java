@@ -51,7 +51,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return User.builder()
                 .username(ususario.getUsername())
                 .password(passwordEncoder.encode(ususario.getPublicPassword()))
-                .roles(ususario.getRolFk().getNombreRol()) //ROLE_STUDENT
+                .roles(ususario.getRolFk().getNombreRol())
                 .build();
     }
 }
