@@ -20,12 +20,19 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.oauth2ResourceServer()
-                .jwt();//el decoder lo coge por el @bean
+                .jwt();//el decoder y el authConverter lo coge por el @bean
 
+        //para que muestre el index del sitio
+        http
+                .authorizeRequests()
+                .mvcMatchers("/").permitAll();
+
+        //por defecto todas las llamadas tienen que estar authenticadas, y cada endpoint se asegura de autorizarlas
         http
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated();
+
     }
 
     /**
