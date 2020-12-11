@@ -5,11 +5,11 @@
  */
 package com.jhw.module.authorization_server.oauth2.permission;
 
-import org.aspectj.lang.JoinPoint;
+import java.lang.reflect.Method;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,11 +20,13 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class AspectAccessLevel {
 
-    @Before("@annotation(AccessLevel)")
-    public void test(JoinPoint joinPoint) throws Exception {
-        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
-        AccessLevel annot = ((MethodSignature) joinPoint.getSignature()).getMethod().getAnnotation(AccessLevel.class);
-        System.out.println("Value " + annot.value());
-        throw new Exception("123");
+    @Around("@annotation(AccessLevel)")
+    public void test(ProceedingJoinPoint joinPoint) throws Exception {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        AccessLevel annot = method.getAnnotation(AccessLevel.class);
+        int accessValue = annot.value();
+
+        //throw new RuntimeException("123");
     }
 }
