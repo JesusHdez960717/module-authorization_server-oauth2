@@ -12,10 +12,4 @@ project(':utils-core').projectDir = "E:\\Trabajos\\Projects\\GIT Projects Gradle
 include ':module-util-mysql'
 project(':module-util-mysql').projectDir = "E:\\Trabajos\\Projects\\GIT Projects Gradle\\module-util-mysql" as File
 
-include ':module-admin-seguridad-standard'
-project(':module-admin-seguridad-standard').projectDir = "E:\\Trabajos\\Projects\\GIT Projects Gradle\\module-admin-seguridad-standard" as File
-
-include ':module-admin-seguridad-server'
-project(':module-admin-seguridad-server').projectDir = "E:\\Trabajos\\Projects\\GIT Projects Gradle\\module-admin-seguridad-server" as File
-
 

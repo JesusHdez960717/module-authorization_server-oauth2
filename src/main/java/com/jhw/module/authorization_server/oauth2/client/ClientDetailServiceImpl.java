@@ -6,13 +6,10 @@
 package com.jhw.module.authorization_server.oauth2.client;
 
 import com.clean.core.domain.services.Resource;
-import com.jhw.module.admin.seguridad.core.usecase_def.ClienteUseCase;
-import com.jhw.module.authorization_server.oauth2.A_ModuleOAuth2;
 import com.jhw.module.authorization_server.oauth2.service.ResourceKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;

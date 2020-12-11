@@ -38,9 +38,6 @@ dependencies {
     implementation project(':utils-spring')
     implementation project(':clean-core-full')
     
-    implementation project(':module-admin-seguridad-standard')
-    implementation project(':module-admin-seguridad-server')
-	
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
     
     //EclipseLink
