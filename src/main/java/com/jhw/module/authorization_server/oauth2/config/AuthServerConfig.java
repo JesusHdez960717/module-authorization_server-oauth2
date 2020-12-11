@@ -5,6 +5,7 @@
  */
 package com.jhw.module.authorization_server.oauth2.config;
 
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
@@ -41,6 +43,9 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private JwtAccessTokenConverter tokenConverter;
 
+    @Autowired
+    private TokenEnhancerChain tokenEnhancerChain;
+    
     /**
      * Si este no esta configurado se coge por defecto el passwordEncoder del
      * Bean, en este caso BCrypt, por lo que tiene que coincidir lo que se le
@@ -67,6 +72,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
                 .tokenStore(tokenStore)
-                .accessTokenConverter(tokenConverter);
+                .accessTokenConverter(tokenConverter)
+                .tokenEnhancer(tokenEnhancerChain);
     }
 }

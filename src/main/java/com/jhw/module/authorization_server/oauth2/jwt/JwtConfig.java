@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jhw.module.authorization_server.oauth2.config;
+package com.jhw.module.authorization_server.oauth2.jwt;
 
+import com.jhw.module.authorization_server.oauth2.jwt.JwtCustomConverter;
 import com.nimbusds.jose.shaded.json.JSONArray;
 import java.util.Map;
 import javax.crypto.SecretKey;
@@ -17,11 +18,12 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.stereotype.Component;
-
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 
 /**
@@ -36,16 +38,24 @@ public class JwtConfig {
     static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);//llave random, como tiene que ser
 
     @Bean
-    public JwtAccessTokenConverter converter() {
-        JwtAccessTokenConverter conv = new JwtAccessTokenConverter();
+    public JwtAccessTokenConverter tokenConverter() {
+        JwtAccessTokenConverter conv = new JwtCustomConverter();
         conv.setSigningKey(new String(SECRET_KEY.getEncoded()));
         return conv;
     }
 
     @Bean
+    public TokenEnhancerChain tokenEnhancerChain(
+            @Autowired JwtAccessTokenConverter tokenConverter) {
+        final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenConverter));
+        return tokenEnhancerChain;
+    }
+
+    @Bean
     public TokenStore tokenStore(
-            @Autowired JwtAccessTokenConverter converter) {
-        TokenStore store = new JwtTokenStore(converter);
+            @Autowired JwtAccessTokenConverter tokenConverter) {
+        TokenStore store = new JwtTokenStore(tokenConverter);
         return store;
     }
 
