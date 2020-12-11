@@ -38,14 +38,14 @@ public class JwtConfig {
     static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);//llave random, como tiene que ser
 
     @Bean
-    public JwtAccessTokenConverter tokenConverter() {
+    public JwtAccessTokenConverter tokenConverter() {//el que firma el token y lo encripta
         JwtAccessTokenConverter conv = new JwtCustomConverter();
         conv.setSigningKey(new String(SECRET_KEY.getEncoded()));
         return conv;
     }
 
     @Bean
-    public TokenEnhancerChain tokenEnhancerChain(
+    public TokenEnhancerChain tokenEnhancerChain(//la cadena que mejoran el token uno a uno
             @Autowired JwtAccessTokenConverter tokenConverter) {
         final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenConverter));
@@ -53,14 +53,14 @@ public class JwtConfig {
     }
 
     @Bean
-    public TokenStore tokenStore(
+    public TokenStore tokenStore(//el store
             @Autowired JwtAccessTokenConverter tokenConverter) {
         TokenStore store = new JwtTokenStore(tokenConverter);
         return store;
     }
 
     @Bean
-    public JwtDecoder decoder(@Autowired JwtAccessTokenConverter converter) {
+    public JwtDecoder decoder(@Autowired JwtAccessTokenConverter converter) {//lo que lo decodifica y comprueba si es verdadero
         Map<String, String> keys = converter.getKey();
         String secret = keys.get("value");
         String alg = keys.get("alg");
@@ -71,7 +71,7 @@ public class JwtConfig {
     }
 
     @Bean
-    public JwtAuthenticationConverter authConverter() {
+    public JwtAuthenticationConverter authConverter() {//el que convierte las authorities para compararlas con los roles y demas verificaciones
         JwtAuthenticationConverter conv = new JwtAuthenticationConverter();
         conv.setJwtGrantedAuthoritiesConverter(jwt -> {
             JSONArray arr = (JSONArray) jwt.getClaims().get("authorities");

@@ -5,8 +5,7 @@
  */
 package com.jhw.module.authorization_server.oauth2.jwt;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -22,12 +21,7 @@ public class JwtCustomConverter extends JwtAccessTokenConverter {
 
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-        Object userInfo = authentication.getPrincipal();
-
-        final Map<String, Object> aditionalInfo = new HashMap<>();
-        aditionalInfo.put("buajajaja", "123123123123");
-        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(aditionalInfo);
-
+        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(JwtEnhancers.getAdditionalInformation(authentication.getUserAuthentication()));
         return super.enhance(accessToken, authentication);
     }
 
