@@ -5,7 +5,7 @@
  */
 package com.jhw.module.authorization_server.oauth2.config;
 
-import com.jhw.utils.security.SHA;
+import com.nimbusds.jose.shaded.json.JSONArray;
 import java.util.Map;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -20,6 +20,9 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import java.util.stream.Collectors;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 
 /**
  *
@@ -54,6 +57,19 @@ public class JwtConfig {
 
         SecretKey key = new SecretKeySpec(secret.getBytes(), alg);
 
-        return NimbusJwtDecoder.withSecretKey(key).build();
+        return NimbusJwtDecoder.withSecretKey(key).build();//NimbusJwtDecoder.withPublicKey(RSAPublicKey)
+    }
+
+    @Bean
+    public JwtAuthenticationConverter authConverter() {
+        JwtAuthenticationConverter conv = new JwtAuthenticationConverter();
+        conv.setJwtGrantedAuthoritiesConverter(jwt -> {
+            JSONArray arr = (JSONArray) jwt.getClaims().get("authorities");
+            return arr.stream()
+                    .map(String::valueOf)
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+        });
+        return conv;
     }
 }
