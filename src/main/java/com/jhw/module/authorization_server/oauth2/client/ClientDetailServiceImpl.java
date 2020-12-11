@@ -26,19 +26,13 @@ import org.springframework.stereotype.Service;
 @Primary//marcarlo como primario para que sobreescriba el por defecto
 public class ClientDetailServiceImpl implements ClientDetailsService {
 
-    private final PasswordEncoder passwordEncoder;
-
-    private final ClienteUseCase clienteUC = A_ModuleOAuth2.clienteUC;
-
     @Autowired
-    public ClientDetailServiceImpl(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    private ClientDetailServiceAdapter clientResolver;
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
         try {
-            return ClientDetailsWrapper.from(passwordEncoder, clienteUC.loadClientByName(clientId));
+            return clientResolver.convert(clientResolver.loadClientByClientId(clientId));
         } catch (Exception e) {
             throw new UsernameNotFoundException(
                     Resource.getString(ResourceKeys.KEY_MSG_NO_CLIENT_FOR_NAME)
