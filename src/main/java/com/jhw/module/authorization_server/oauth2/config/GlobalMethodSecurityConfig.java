@@ -5,7 +5,7 @@
  */
 package com.jhw.module.authorization_server.oauth2.config;
 
-import com.jhw.module.authorization_server.oauth2.permission.AccessLevelPermissionEvaluator;
+//import com.jhw.module.admin.seguridad.permission.AccessLevelPermissionEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -28,11 +28,7 @@ public class GlobalMethodSecurityConfig extends GlobalMethodSecurityConfiguratio
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {
         DefaultMethodSecurityExpressionHandler meh = new DefaultMethodSecurityExpressionHandler();
-
-        meh.setPermissionEvaluator(new AccessLevelPermissionEvaluator());
-
         meh.setApplicationContext(applicationContext);
-
         return meh;
     }
 
