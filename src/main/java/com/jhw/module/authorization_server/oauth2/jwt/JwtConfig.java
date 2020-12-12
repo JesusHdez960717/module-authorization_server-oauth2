@@ -5,7 +5,6 @@
  */
 package com.jhw.module.authorization_server.oauth2.jwt;
 
-import com.jhw.module.authorization_server.oauth2.jwt.JwtCustomConverter;
 import com.nimbusds.jose.shaded.json.JSONArray;
 import java.util.Map;
 import javax.crypto.SecretKey;

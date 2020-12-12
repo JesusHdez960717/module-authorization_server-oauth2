@@ -45,7 +45,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private TokenEnhancerChain tokenEnhancerChain;
-    
+
     /**
      * Si este no esta configurado se coge por defecto el passwordEncoder del
      * Bean, en este caso BCrypt, por lo que tiene que coincidir lo que se le
