@@ -4,7 +4,7 @@ plugins {
 
 group = 'com.jhw.module.authorization_server'
 
-version = '1.4.0.SNAPSHOT.20201211'
+version = '1.5.0.SNAPSHOT.20201213'
 
 repositories {
     jcenter()
@@ -34,16 +34,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.13'
 
-    implementation project(':utils-core')
-    implementation project(':utils-spring')
     implementation project(':clean-core-full')
-    
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
-    
-    //EclipseLink
-    compile group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.6'
-    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '2.7.6'
-    
     //injection
     compile group: 'com.google.inject', name: 'guice', version: '4.2.3'
     compile group: 'javax.inject', name: 'javax.inject', version: '1'
