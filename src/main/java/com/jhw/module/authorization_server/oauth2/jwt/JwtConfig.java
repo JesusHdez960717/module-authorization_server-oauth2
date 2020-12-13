@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jhw.module.authorization_server.oauth2.config;
+package com.jhw.module.authorization_server.oauth2.jwt;
 
 import com.nimbusds.jose.shaded.json.JSONArray;
 import java.util.Map;
@@ -17,11 +17,12 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.stereotype.Component;
-
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 
 /**
@@ -36,21 +37,29 @@ public class JwtConfig {
     static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);//llave random, como tiene que ser
 
     @Bean
-    public JwtAccessTokenConverter converter() {
-        JwtAccessTokenConverter conv = new JwtAccessTokenConverter();
+    public JwtAccessTokenConverter tokenConverter() {//el que firma el token y lo encripta
+        JwtAccessTokenConverter conv = new JwtCustomConverter();
         conv.setSigningKey(new String(SECRET_KEY.getEncoded()));
         return conv;
     }
 
     @Bean
-    public TokenStore tokenStore(
-            @Autowired JwtAccessTokenConverter converter) {
-        TokenStore store = new JwtTokenStore(converter);
+    public TokenEnhancerChain tokenEnhancerChain(//la cadena que mejoran el token uno a uno
+            @Autowired JwtAccessTokenConverter tokenConverter) {
+        final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenConverter));
+        return tokenEnhancerChain;
+    }
+
+    @Bean
+    public TokenStore tokenStore(//el store
+            @Autowired JwtAccessTokenConverter tokenConverter) {
+        TokenStore store = new JwtTokenStore(tokenConverter);
         return store;
     }
 
     @Bean
-    public JwtDecoder decoder(@Autowired JwtAccessTokenConverter converter) {
+    public JwtDecoder decoder(@Autowired JwtAccessTokenConverter converter) {//lo que lo decodifica y comprueba si es verdadero
         Map<String, String> keys = converter.getKey();
         String secret = keys.get("value");
         String alg = keys.get("alg");
@@ -61,7 +70,7 @@ public class JwtConfig {
     }
 
     @Bean
-    public JwtAuthenticationConverter authConverter() {
+    public JwtAuthenticationConverter authConverter() {//el que convierte las authorities para compararlas con los roles y demas verificaciones
         JwtAuthenticationConverter conv = new JwtAuthenticationConverter();
         conv.setJwtGrantedAuthoritiesConverter(jwt -> {
             JSONArray arr = (JSONArray) jwt.getClaims().get("authorities");
