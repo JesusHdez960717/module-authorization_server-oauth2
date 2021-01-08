@@ -5,7 +5,7 @@
  */
 package com.jhw.module.authorization_server.oauth2.user;
 
-import com.clean.core.domain.services.Resource;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import com.jhw.module.authorization_server.oauth2.service.ResourceKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -31,7 +31,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             return userResolver.convert(userResolver.loadUserByUsername(username));
         } catch (Exception e) {
             throw new UsernameNotFoundException(
-                    Resource.getString(ResourceKeys.KEY_MSG_NO_USER_FOR_USERNAME)
+                    ResourceHandler.getString(ResourceKeys.KEY_MSG_NO_USER_FOR_USERNAME)
                     + ": " + username);
         }
     }

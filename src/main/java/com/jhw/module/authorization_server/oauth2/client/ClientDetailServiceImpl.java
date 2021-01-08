@@ -5,7 +5,7 @@
  */
 package com.jhw.module.authorization_server.oauth2.client;
 
-import com.clean.core.domain.services.Resource;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import com.jhw.module.authorization_server.oauth2.service.ResourceKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -32,7 +32,7 @@ public class ClientDetailServiceImpl implements ClientDetailsService {
             return clientResolver.convert(clientResolver.loadClientByClientId(clientId));
         } catch (Exception e) {
             throw new UsernameNotFoundException(
-                    Resource.getString(ResourceKeys.KEY_MSG_NO_CLIENT_FOR_NAME)
+                    ResourceHandler.getString(ResourceKeys.KEY_MSG_NO_CLIENT_FOR_NAME)
                     + ": " + clientId);
         }
     }

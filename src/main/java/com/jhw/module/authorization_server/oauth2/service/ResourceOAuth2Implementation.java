@@ -1,9 +1,9 @@
 package com.jhw.module.authorization_server.oauth2.service;
 
-import com.clean.core.domain.services.Resource;
-import com.clean.core.domain.services.ResourceBundleUtils;
-import com.clean.core.domain.services.ResourceService;
-import com.clean.core.domain.services.DefaultResourceBundleService;
+import com.root101.clean.core.domain.services.ResourceHandler;
+import com.root101.clean.core.domain.services.ResourceBundleUtils;
+import com.root101.clean.core.domain.services.ResourceService;
+import com.root101.clean.core.domain.services.DefaultResourceBundleService;
 import java.net.MalformedURLException;
 
 /**
@@ -19,7 +19,7 @@ public class ResourceOAuth2Implementation implements ResourceService {
     public static ResourceOAuth2Implementation init() {
         try {
             ResourceOAuth2Implementation res = new ResourceOAuth2Implementation();
-            Resource.registerResourceService(res);
+            ResourceHandler.registerResourceService(res);
             return res;
         } catch (Exception e) {
         }
