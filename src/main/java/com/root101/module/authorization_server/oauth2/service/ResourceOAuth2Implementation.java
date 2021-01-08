@@ -1,4 +1,4 @@
-package com.jhw.module.authorization_server.oauth2.service;
+package com.root101.module.authorization_server.oauth2.service;
 
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.clean.core.domain.services.ResourceBundleUtils;

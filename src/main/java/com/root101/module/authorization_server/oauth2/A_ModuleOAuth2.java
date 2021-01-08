@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jhw.module.authorization_server.oauth2;
+package com.root101.module.authorization_server.oauth2;
 
 import org.springframework.stereotype.Component;
-import com.jhw.module.authorization_server.oauth2.service.ResourceOAuth2Implementation;
+import com.root101.module.authorization_server.oauth2.service.ResourceOAuth2Implementation;
 
 /**
  *

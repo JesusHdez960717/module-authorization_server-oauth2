@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jhw.module.authorization_server.oauth2.user;
+package com.root101.module.authorization_server.oauth2.user;
 
 import com.root101.clean.core.domain.services.ResourceHandler;
-import com.jhw.module.authorization_server.oauth2.service.ResourceKeys;
+import com.root101.module.authorization_server.oauth2.service.ResourceKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
