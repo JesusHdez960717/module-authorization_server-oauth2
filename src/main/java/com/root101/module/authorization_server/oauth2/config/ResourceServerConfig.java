@@ -43,7 +43,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .mvcMatchers("/admin/**").permitAll();
-        
+
         //por defecto todas las llamadas tienen que estar authenticadas, y cada endpoint se asegura de autorizarlas
         http
                 .authorizeRequests()
