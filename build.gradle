@@ -4,7 +4,7 @@ plugins {
 
 group = 'com.root101.module.authorization_server'
 
-version = '1.9.9.SNAPSHOT.20210108'
+version = '2.0.0.REELASE.20210109'
 
 repositories {
     jcenter()
@@ -13,7 +13,6 @@ repositories {
 
 dependencies {
     compile group: 'org.springframework', name: 'spring-aspects', version: '5.3.1'
-
     
     compile group: 'org.springframework.security', name: 'spring-security-oauth2-resource-server', version: '5.4.1'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.4.0'
@@ -37,5 +36,5 @@ dependencies {
     implementation project(':clean-core')
     //injection
     compile group: 'com.google.inject', name: 'guice', version: '4.2.3'
-    compile group: 'javax.inject', name: 'javax.inject', version: '1'
+    
 }
